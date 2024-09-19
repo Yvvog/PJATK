@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+    <link rel="stylesheet" th:href="@{../main.css}">
+    <body>
+    <header data-role="Header" class="home-header">
+        <img
+                alt="logo"
+                src="https://cdn.discordapp.com/attachments/809034761091022858/1119622406403792997/vetclinic.png"
+                class="home-image"
+        />
+        <div class="home-nav">
+            <nav class="navigation-nav">
+                <span class="navigation-links3-text"><span>Home</span></span>
+                <span class="navigation-links3-text"><span>About</span></span>
+                <span class="navigation-links3-text"><span><a th:onclick="|location.href='/appointments/list'|">Appointments</a></span></span>
+                <span class="navigation-links3-text"><span><a th:onclick="|location.href='/animals/list'|">Animals</a></span></span>
+                <span class="navigation-links3-text"><span>My Profile</span></span>
+            </nav>
+        </div>
+    </header>
+    <h1 class="head-text">Appointments</h1>
+    <div class="home-container">
+        <table class="table-list">
+            <thead>
+            <tr>
+                <th> # </th>
+                <th> Doctor</th>
+                <th> Animal </th>
+                <th> Date </th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "apps: ${apps}">
+                <td th:text = "${apps.id}"></td>
+                <td th:text = "${apps.doctor.name}"></td>
+                <td th:text = "${apps.animal.name}"></td>
+                <td th:text = "${apps.date}"></td>
+                <td> <button type="button" class="home-button button" th:onclick="|location.href='/appointments/${apps.id}'|">Select</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="home-container02">
+        <button type="button" class="home-button">Add New</button>
+    </div>
+    <footer class="home-footer">
+        <div class="home-container03">
+            <img
+                    alt="logo"
+                    src="https://cdn.discordapp.com/attachments/809034761091022858/1119622406403792997/vetclinic.png"
+                    class="home-image"
+            />
+            <span class="home-text03">
+          <span>© 2021 teleportHQ,</span>
+          <br />
+          <span>All Rights Reserved.</span>
+        </span>
+        </div>
+        <div class="home-links-container">
+            <div class="home-container04">
+                <div class="home-container05">
+                    <span class="footer-text">Product</span>
+                    <span class="footer-text">Features</span>
+                    <span class="footer-text">Pricing</span>
+                    <span class="footer-text">Tutorials</span>
+                    <span class="footer-text">Releases</span>
+                </div>
+                <div class="home-container05">
+                    <span class="footer-text">Company</span>
+                    <span class="footer-text">About</span>
+                    <span class="footer-text">Careers</span>
+                    <span class="footer-text">Contact</span>
+                    <span class="footer-text">Blog</span>
+                </div>
+            </div>
+            <div class="home-container04">
+                <div class="home-container05">
+                    <span class="footer-text">Support</span>
+                    <span class="footer-text">Terms of service</span>
+                    <span class="footer-text">Privacy Policy</span>
+                    <span class="footer-text">Legal</span>
+                    <span class="footer-text">Help center</span>
+                </div>
+                <div class="home-container05">
+                    <span class="footer-text">Resources</span>
+                    <span class="footer-text">Blog</span>
+                    <span class="footer-text">Pricing</span>
+                    <span class="footer-text">Service</span>
+                    <span class="footer-text">Product</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+</div>
+</html>

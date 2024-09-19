@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+  <link rel="stylesheet" th:href="@{../main.css}">
+  <script>
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      var selectedValue = document.getElementById("mySelect").value;
+      window.location.href = "/reservation/process/selectedValue=" + encodeURIComponent(selectedValue);
+    });
+    function checkSelection() {
+      var selectElement = document.getElementById("appSelect");
+      var submitButton = document.getElementById("submitButton");
+
+      if (selectElement.value !== "") {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
+    }
+  </script>
+  <body>
+  <header data-role="Header" class="home-header">
+    <img
+            alt="logo"
+            src="https://cdn.discordapp.com/attachments/809034761091022858/1119622406403792997/vetclinic.png"
+            class="home-image"
+    />
+    <div class="home-nav">
+      <nav class="navigation-nav">
+        <span class="navigation-links3-text"><span>Home</span></span>
+        <span class="navigation-links3-text"><span>About</span></span>
+        <span class="navigation-links3-text"><span><a th:onclick="|location.href='/appointments/list'|">Appointments</a></span></span>
+        <span class="navigation-links3-text"><span><a th:onclick="|location.href='/animals/list'|">Animals</a></span></span>
+        <span class="navigation-links3-text"><span>My Profile</span></span>
+      </nav>
+    </div>
+  </header>
+  <h1 class="head-text" th:text="${animal.name}"></h1>
+  <div class="home-container1">
+    <h1>Information</h1>
+    <table class="table-text">
+      <tbody>
+        <tr>
+          <td>Name: </td>
+          <td th:text="${animal.name}"></td>
+         </tr>
+        <tr>
+          <td>Arrival Date: </td>
+          <td th:text="${animal.arrivalDate}"></td>
+        </tr>
+        <tr>
+          <td>Breed: </td>
+          <td th:text="${animal.breed}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <form method="get" id="dormForm" class="form" th:action="@{/appointments/info}">
+      <select id="appSelect" name="appSelect" class="home-select" onchange="checkSelection()">
+        <option disabled selected value="">Select appointment</option>
+        <option th:each="appointments: ${appointments}" th:value = "${appointments.id}" th:text = "${appointments.date}"></option>
+      </select>
+      <button id="submitButton" type="submit" disabled class="home-button">Submit</button>
+    </form>
+  </div>
+  <div class="home-container02">
+    <button type="button" class="home-button" >Delete</button>
+    <button type="button" class="home-button" th:onclick="|location.href='/animals/list'|">Back</button>
+  </div>
+  <footer class="home-footer">
+    <div class="home-container03">
+      <img
+              alt="logo"
+              src="https://cdn.discordapp.com/attachments/809034761091022858/1119622406403792997/vetclinic.png"
+              class="home-image"
+      />
+      <span class="home-text03">
+          <span>© 2021 teleportHQ,</span>
+          <br />
+          <span>All Rights Reserved.</span>
+        </span>
+    </div>
+    <div class="home-links-container">
+      <div class="home-container04">
+        <div class="home-container05">
+          <span class="footer-text">Product</span>
+          <span class="footer-text">Features</span>
+          <span class="footer-text">Pricing</span>
+          <span class="footer-text">Tutorials</span>
+          <span class="footer-text">Releases</span>
+        </div>
+        <div class="home-container05">
+          <span class="footer-text">Company</span>
+          <span class="footer-text">About</span>
+          <span class="footer-text">Careers</span>
+          <span class="footer-text">Contact</span>
+          <span class="footer-text">Blog</span>
+        </div>
+      </div>
+      <div class="home-container04">
+        <div class="home-container05">
+          <span class="footer-text">Support</span>
+          <span class="footer-text">Terms of service</span>
+          <span class="footer-text">Privacy Policy</span>
+          <span class="footer-text">Legal</span>
+          <span class="footer-text">Help center</span>
+        </div>
+        <div class="home-container05">
+          <span class="footer-text">Resources</span>
+          <span class="footer-text">Blog</span>
+          <span class="footer-text">Pricing</span>
+          <span class="footer-text">Service</span>
+          <span class="footer-text">Product</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  </body>
+</div>
+</html>
