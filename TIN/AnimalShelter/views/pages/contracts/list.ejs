@@ -1,0 +1,77 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>
+        <%= __('contract.list.title') %>
+    </h2>
+    <table class="table-list-contracts">
+        <tr>
+            <th>
+                <%= __('contract.fields.Dog') %>
+            </th>
+            <th>
+                <%= __('contract.fields.Visitor') %>
+            </th>
+            <th>
+                <%= __('contract.fields.Date') %>
+            </th>
+            <th>
+                <%= __('contract.fields.Obligations') %>
+            </th>
+            <th>
+                <%= __('list.actions.title') %>
+            </th>
+        </tr>
+        <tbody>
+        <% for (let contr of contrs) { %>
+            <% if((contr.Vis._id == loggedUser._id) || admin || empi) { %>
+            <tr>
+                <td>
+                    <%= contr.Dog.DogName %>
+                </td>
+                <td>
+                    <%= contr.Vis.Name %>
+                </td>
+                <td>
+                    <%= contr.Date.toISOString().split('T')[0] %>
+                </td>
+                <td>
+                    <%= contr.Obligations %>
+                </td>
+                <td>
+                    <ul class="list-actions">
+                        <% if((loggedUser._id == contr.Vis._id) || admin || empi){ %>
+                        <li>
+                            <a href="/contracts/details/<%= contr._id %>" class="list-actions-button-details">
+                                <%= __('list.actions.details') %>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/contracts/edit/<%= contr._id %>" class="list-actions-button-edit">
+                                <%= __('list.actions.edit') %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(admin){ %>
+                        <li>
+                            <a href="/contracts/delete/<%= contr._id %>" class="list-actions-button-delete">
+                                <%= __('list.actions.delete') %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </td>
+            </tr>
+            <% } %>
+
+        <% } %>
+        </tbody>
+    </table>
+    <% if(admin || empi){ %>
+    <p>
+        <a href="/contracts/add" class="button-add">
+            <%= __('contract.list.AddNew') %>
+        </a>
+    </p>
+    <% } %>
+</main>
+<%- include('../../fragments/footer.ejs') %>

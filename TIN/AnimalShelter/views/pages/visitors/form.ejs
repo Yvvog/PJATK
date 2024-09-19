@@ -1,0 +1,144 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <script type="application/javascript" src="/js/validationVisitorForm.js"></script>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+
+    <!--onsubmit="return validateForm();"-->
+    <form class="form" method="post" action="<%= formAction %>" novalidate>
+        <div style="display: none">
+            <span id="errorMessage-required"><%= __('validationMessage.fieldRequired') %></span>
+            <span id="errorMessage-length"><%= __('validationMessage.fieldLength') %></span>
+            <span id="errorMessage-notNumber"><%= __('validationMessage.fieldNotNumber') %></span>
+            <span id="errorMessage-numberRange"><%= __('validationMessage.fieldNumberRange') %></span>
+            <span id="errorMessage-emailPattern"><%= __('validationMessage.fieldEmailPat') %></span>
+            <span id="errorMessage-passPattern"><%= __('validationMessage.fieldPasswordPat') %></span>
+            <span id="errorMessage-totalError"><%= __('validationMessage.totalError') %></span>
+        </div>
+        <input type="hidden" name="_id" value="<%= vis._id %>">
+        <label for="Name"><%= __('visitor.fields.Name') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="Name" id="Name" placeholder="2-60 charachters"
+               value="<%= vis.Name %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+            <%= validationErrors.find(e => e.path.includes('Name')) ? 'error-input' : '' %>"/>
+        <span id="errorName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Name'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Name')).message) %>
+            <% } %>
+        </span>
+        <label for="Surname"><%= __('visitor.fields.Surname') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="Surname" id="Surname" placeholder="2-60 charachters"
+               value="<%= vis.Surname %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Surname')) ? 'error-input' : '' %>"/>
+        <span id="errorSurname" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Surname'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Surname')).message) %>
+            <% } %>
+        </span>
+        <label for="NumberOfVisits"><%= __('visitor.fields.NumberOfVisits') %>:</label>
+        <input type="text" name="NumberOfVisits" id="NumberOfVisits" pattern="[0-9]{1,3}+"
+               value="<%= (vis.NumberOfVisit == " 0 ") ? " " : vis.NumberOfVisits %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %>
+               class="
+                    <%= validationErrors.find(e => e.path.includes('NumberOfVisits')) ? 'error-input' : '' %>"/>
+        <span id="errorNumberOfVisits" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('NumberOfVisits'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('NumberOfVisits')).message) %>
+            <% } %>
+        </span>
+        <label for="Email"><%= __('visitor.fields.Email') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="Email" id="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               placeholder="ex. user123@gmail.com"
+               value="<%= vis.Email %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+                        <%= validationErrors.find(e => e.path.includes('Email')) ? 'error-input' : '' %>"/>
+        <span id="errorEmail" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Email'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Email')).message) %>
+            <% } %>
+        </span>
+        <% if(formMode != 'showDetails') { %>
+        <% if(formMode == 'showEdit' || formMode == 'edit'){ %>
+        <label for="Password"><%= __('visitor.fields.Password') %>: </label>
+        <input type="text" name="Password" id="Password" placeholder='write a new password' class="
+                                    <%= validationErrors.find(e => e.path.includes('Password')) ? 'error-input' : '' %>"/>
+        <% } else { %>
+        <label for="Password"><%= __('visitor.fields.Password') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="Password" id="Password" value="<%= vis.Password %>"
+               class=" <%= validationErrors.find(e => e.path.includes('Password')) ? 'error-input' : '' %>"/>
+        <% } %>
+        <span id="errorPassword" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Password'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Password')).message) %>
+            <% } %>
+            <% } %>
+        </span>
+        <% if(formMode == 'showDetails') { %>
+            <div class="form-buttons">
+                <a href="/visitors/edit/<%= vis._id %>" class="list-actions-button-edit">
+                    <%= __('list.actions.edit') %>
+                </a>
+            </div>
+        <% } %>
+        <% if (formMode == 'showDetails') { %>
+        <div class="wrapper">
+            <% if (vis.contracts.length > 0) { %>
+            <h2>
+                <%= __('visitor.form.Details.ContractDetails') %>
+            </h2>
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>
+                        <%= __('contract.fields.Dog') %>
+                    </th>
+                    <th>
+                        <%= __('contract.fields.Date') %>
+                    </th>
+                    <th>
+                        <%= __('contract.fields.Obligations') %>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (let c of vis.contracts) { %>
+                <tr>
+                    <td>
+                        <a href="/dogs/details/<%= c.Dog._id %>">
+                            <%= c.Dog.DogName %>
+                        </a>
+                    </td>
+                    <td>
+                        <%= c.Date.toISOString().split('T')[0] %>
+                    </td>
+                    <td>
+                        <%= c.Obligations %>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+            <% }else{ %>
+            <div>
+                <%= __('contract.fields.NoFound') %>
+            </div>
+            <% } %>
+            <% } %>
+        </div>
+
+        <input type="hidden" name="formMode" id="formMode" value="<%= formMode %>">
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if(formMode != 'showDetails') { %>
+            <input type="submit" class="form-button-submit" value="<%= btnLabel %>"/>
+            <a class="form-button-cancel" href="/visitors">
+                <%= __('form.actions.cancel') %>
+            </a>
+            <% } else { %>
+            <a class="form-button-cancel" href="/visitors">
+                <%= __('form.actions.return') %>
+            </a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const visitorsController = require('../controllers/visitorsController');
+router.get('/', visitorsController.showVisitorsList);
+router.get('/add', visitorsController.showAddVisitorForm);
+router.get('/edit/:visId', visitorsController.showEditVisitorForm);
+router.get('/details/:visId', visitorsController.showVisitorDetails);
+router.post('/add', visitorsController.addVisitor);
+router.post('/edit', visitorsController.updateVisitor);
+router.get('/delete/:visId', visitorsController.deleteVisitor);
+module.exports = router;

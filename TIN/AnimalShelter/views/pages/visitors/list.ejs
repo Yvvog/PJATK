@@ -1,0 +1,79 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>
+        <%= __('visitor.list.title') %>
+    </h2>
+    <table class="table-list">
+        <tr>
+            <th>
+                <%= __('visitor.fields.Name') %>
+            </th>
+            <th>
+                <%= __('visitor.fields.Surname') %>
+            </th>
+            <th>
+                <%= __('visitor.fields.NumberOfVisits') %>
+            </th>
+            <th>
+                <%= __('visitor.fields.Email') %>
+            </th>
+            <th>
+                <%= __('list.actions.title') %>
+            </th>
+        </tr>
+        <tbody>
+        <% for (let vis of visitors) { %>
+            <% if((vis._id == loggedUser._id) || admin || empi) { %>
+            <tr>
+                <td>
+                    <%= vis.Name %>
+                </td>
+                <td>
+                    <%= vis.Surname %>
+                </td>
+                <td>
+                    <% if(vis.NumberOfVisits != 0){ %>
+                        <%= vis.NumberOfVisits %>
+                    <% } %>
+                </td>
+                <td>
+                    <%= vis.Email %>
+                </td>
+                <td>
+                    <ul class="list-actions">
+                        <li>
+                            <a href="/visitors/details/<%= vis._id %>" class="list-actions-button-details">
+                                <%= __('list.actions.details') %>
+                            </a>
+                        </li>
+                        <% if(loggedUser._id == vis._id || admin || empi){ %>
+                        <li>
+                            <a href="/visitors/edit/<%= vis._id %>" class="list-actions-button-edit">
+                                <%= __('list.actions.edit') %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(admin){ %>
+                        <li>
+                            <a href="/visitors/delete/<%= vis._id %>" class="list-actions-button-delete">
+                                <%= __('list.actions.delete') %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </td>
+            </tr>
+            <% } %>
+
+        <% } %>
+        </tbody>
+    </table>
+    <% if(admin || empi){ %>
+    <p>
+        <a href="/visitors/add" class="button-add">
+            <%= __('visitor.list.AddNew') %>
+        </a>
+    </p>
+    <% } %>
+</main>
+<%- include('../../fragments/footer.ejs') %>

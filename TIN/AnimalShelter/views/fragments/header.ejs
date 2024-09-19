@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+        <%= __('main-page.content') %>
+    </title>
+</head>
+
+<body>
+<header>
+    <h1>
+        <%= __('main-page.content') %>
+    </h1>
+    <% if(!loggedUser) { %>
+        <div id="login">
+            <h2>
+                <%= __('main-page.logIn') %>
+            </h2>
+            <form method="post" action="/login" novalidate>
+                <label for="loginEmail"><%= __('main-page.email') %>:</label>
+                <input type="Email" id="loginEmail" name="Email">
+                <label for="loginPassword"><%= __('main-page.password') %>:</label>
+                <input type="Password" id="loginPassword" name="Password">
+                <input type="submit" class="header-button-add" value="<%= __('main-page.logIn') %>">
+                <span id="loginErrors"><%= loginError ? loginError : '' %></span>
+            </form>
+        </div>
+    <% } else { %>
+        <h2>
+            <ul>
+                <% if(visi){ %>
+                    <span><%= __('main-page.loggedIn') %>: <%= loggedUser.Name + " " + loggedUser.Surname %></span>
+                <% }else if(empi) { %>
+                    <span><%= __('main-page.loggedIn') %>: <%= loggedUser.EmpName + " " + loggedUser.EmpSurname %></span>
+                <% } %>
+
+                <a href="/logout" class="header-button-add">
+                    <%= __('main-page.logOut') %>
+                </a>
+            </ul>
+        </h2>
+    <% } %>
+    <ul>
+        <li><a href="/changeLang/en" class="<%= lang == 'en' ? 'active' : '' %>">EN</a></li>
+        <li><a href="/changeLang/ru" class="<%= lang == 'ru' ? 'active' : '' %>">RU</a></li>
+    </ul>
+    <img src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/31-Animal-Shelter-Logos-for-Organizations-and-Humane-Societies/dog-house-kennel-by-spayro-brandcrowd.png"
+         alt="Shelter Logo" width="200" height="200">
+
+</header>
+
+<nav>
+    <ul>
+
+        <li>
+            <a href="/" class="<%= navLocation == 'main' ? 'active' : '' %>"> <u>  <%= __('nav.main') %> </u> </a>
+        </li>
+        <li>
+            <a href="/dogs" class="<%= navLocation == 'dog' ? 'active' : '' %>"> <u>  <%= __('nav.dog') %> </u> </a>
+        </li>
+        <% if(loggedUser) { %>
+            <li>
+                <a href="/visitors" class="<%= navLocation == 'visitor' ? 'active' : '' %>">
+                    <u> <%= __('nav.visitor') %> </u> </a>
+            </li>
+            <li>
+                <a href="/contracts" class="<%= navLocation == 'contract' ? 'active' : '' %>">
+                    <u> <%= __('nav.contract') %> </u> </a>
+            </li>
+            <% if(!visi){ %>
+                <li>
+                    <a href="/employees" class="<%= navLocation == 'employee' ? 'active' : '' %>">
+                        <u> <%= __('nav.employee') %> </u> </a>
+                </li>
+                <li>
+                    <a href="/tasks" class="<%= navLocation == 'task' ? 'active' : '' %>">
+                        <u> <%= __('nav.task') %> </u> </a>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</nav>

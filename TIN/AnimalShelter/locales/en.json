@@ -1,0 +1,190 @@
+{
+    "main-page": {
+        "content": "Shelter",
+        "contentText": "Our animal shelter is a staffed facility where homeless animals and animals seized by authorities in cruelty cases find safety and comfort, are cared for, and are made available for adoption. Temporarily housing animals in shelters keeps them from being loose on the streets, where they struggle to find clean food and water, can be hit by cars, can be attacked by other animals or cruel humans, or face other potential dangers.",
+        "logIn": "Log in",
+        "email": "Email",
+        "password": "Password",
+        "loggedIn": "You logged in as ",
+        "logOut": "Log out",
+        "name": "Yeva Vogau s22354"
+    },
+    "nav": {
+        "main": "Main Page",
+        "dog": "Dogs",
+        "visitor": "Visitors",
+        "contract": "Contracts",
+        "employee": "Employees",
+        "task": "Tasks"
+    },
+    "list": {
+        "actions": {
+            "title": "Actions",
+            "details": "Detaiils",
+            "edit": "Edit",
+            "delete": "Delete",
+            "complete": "Complete",
+            "reset": "Reset"
+        },
+        "yes": "yes",
+        "no": "no"
+    },
+    "form": {
+        "actions": {
+            "return": "Return",
+            "edit": "Edit",
+            "cancel": "Cancel"
+        }
+    },
+    "visitor": {
+        "fields": {
+            "Name": "Name",
+            "Surname": "Surname",
+            "NumberOfVisits": "Number of visits",
+            "Email": "Email",
+            "Password": "Password"
+        },
+        "list": {
+            "title": "Visitors",
+            "AddNew": "Add new visitor"
+        },
+        "form": {
+            "Details": {
+                "pageTitle": "Visitor details",
+                "ContractDetails": "Contract details"
+            },
+            "New": {
+                "pageTitle": "New visitor",
+                "btnLabel": "Add"
+            },
+            "Edit": {
+                "pageTitle": "Edit visitor",
+                "btnLabel": "Edit"
+            }
+        }
+    },
+    "dog": {
+        "fields": {
+            "DogName": "Name",
+            "DateFrom": "DateFrom",
+            "Healthy": "Healthy"
+        },
+        "list": {
+            "title": "Dogs",
+            "AddNew": "Add new dog"
+        },
+        "form": {
+            "Details": {
+                "pageTitle": "Dog details",
+                "ContractDetails": "Contract details"
+            },
+            "New": {
+                "pageTitle": "New dog",
+                "btnLabel": "Add"
+            },
+            "Edit": {
+                "pageTitle": "Edit dog",
+                "btnLabel": "Edit"
+            }
+        }
+    },
+    "contract": {
+        "fields": {
+            "Visitor": "Visitor",
+            "Dog": "Dog",
+            "Date": "Date",
+            "Obligations": "Obligations",
+            "NoFound": "No contracts found"
+        },
+        "list": {
+            "title": "Contracts",
+            "AddNew": "Add new contract"
+        },
+        "form": {
+            "pageTitle": "Contract details",
+            "New": {
+                "pageTitle": "New contract",
+                "btnLabel": "Add"
+            },
+            "Edit": {
+                "pageTitle": "Edit contract",
+                "btnLabel": "Edit"
+            }
+        }
+    },
+    "validationMessage": {
+        "fieldRequired": "Field is required.",
+        "fieldLength": "The field should contain 2 to 60 charachters.",
+        "fieldNotNumber": "The field should not contain numbers.",
+        "fieldNumberRange": "Incorrect number. (Try numbers between 0 and 99)",
+        "fieldNumberRangeStatus": "Number should be between 0 and 10",
+        "fieldDateFormat": "The filed should contain the date in the yyyy-MM-dd format.",
+        "fieldPastDate": "The date cannot be from the past.",
+        "fieldDateIfAfter": "The \"Date to\" should be later than the \"Date from\".",
+        "fieldEmailPat": "The incorrect email pattern.",
+        "fieldPasswordPat": "The password should contain 1 small and 1 capital letter, digit and special symbol.",
+        "fieldPattern": "The pattern is incorrect",
+        "totalError": "Form contains errors.",
+        "fieldMIN": "The number of characters should be more",
+        "fieldMAX": "The number of characters should be less",
+        "fieldNegativeNumber": "The number should be positive",
+        "fieldBigNum": "The number is too big"
+    },
+    "\"DateFrom\" must be a valid date": "Required",
+    "\"NumberOfVisits\" must be a number": "Must be a number",
+    "employee": {
+        "fields": {
+            "EmpName": "Name",
+            "EmpSurname": "Surname",
+            "DateEmp": "DateEmployment",
+            "EmailEmp": "Email",
+            "PasswordEmp": "Password"
+        },
+        "list": {
+            "title": "Employees",
+            "AddNew": "Add new employee"
+        },
+        "form": {
+            "Details": {
+                "pageTitle": "Employee details",
+                "Tasks": "Tasks"
+            },
+            "New": {
+                "pageTitle": "New employee",
+                "btnLabel": "Add"
+            },
+            "Edit": {
+                "pageTitle": "Edit employee",
+                "btnLabel": "Edit"
+            }
+        }
+    },
+    "task": {
+        "fields": {
+            "Employee": "Employee",
+            "Dog": "Dog",
+            "Status": "Status",
+            "Descr": "Descrption",
+            "NoFound": "No tasks found"
+        },
+        "list": {
+            "title": "Tasks",
+            "AddNew": "Add new task"
+        },
+        "form": {
+            "pageTitle": "Task details",
+            "New": {
+                "pageTitle": "New task",
+                "btnLabel": "Add"
+            },
+            "Edit": {
+                "pageTitle": "Edit task",
+                "btnLabel": "Edit"
+            }
+        }
+    },
+    "\"Status\" must be a number": "\"Status\" must be a number",
+    "\"Status\" must be less than or equal to 10": "Number should be between 0 and 10",
+    "\"Status\" must be greater than or equal to 0": "Number should be between 0 and 10",
+    "\"DateEmp\" must be a valid date": "\"DateEmp\" must be a valid date"
+}

@@ -1,0 +1,109 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <script type="application/javascript" src="/js/validationContractForm.js"></script>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+    <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+        <div style="display: none">
+            <span id="errorMessage-required"><%= __('validationMessage.fieldRequired') %></span>
+            <span id="errorMessage-dateFormat"><%= __('validationMessage.fieldDateFormat') %></span>
+            <span id="errorMessage-pastDate"><%= __('validationMessage.fieldPastDate') %></span>
+            <span id="errorMessage-totalError"><%= __('validationMessage.totalError') %></span>
+        </div>
+        <input type="hidden" name="_id" value="<%= contr._id %>">
+        <label for="Visitor"><%= __('contract.fields.Visitor') %>: <span class="symbol-required">*</span></label>
+        <select name="Visitor" id="Visitor" required <%= (formMode == 'showDetails') ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Visitor')) ? 'error-input' : '' %>">
+            <option value="" selected>--<%= __('contract.fields.Visitor') %> --</option>
+            <% for  (let i = 0; i < allViss.length; i++) { let vis = allViss[i]; %>
+            <option value="<%= vis._id %>" label="<%= vis.Name %>"
+            <% if (formMode == 'createNew') { %>
+                <%= (vis._id.toString() == contr.Visitor) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showEdit') { %>
+                    <%= (contr._id && vis._id.toString() == contr.Vis._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'edit') { %>
+                    <%= (vis._id.toString() == contr.Visitor) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showDetails') { %>
+                    <%= (contr._id && vis._id.toString() == contr.Vis._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+            </option>
+            <% } %>
+        </select>
+        <span id="errorVisitor" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Visitor'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Visitor')).message) %>
+            <% } %>
+        </span>
+        <label for="Dog"><%= __('contract.fields.Dog') %>: <span class="symbol-required">*</span></label>
+        <select name="Dog" id="Dog" required <%= (formMode == 'showDetails') ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Dog')) ? 'error-input' : '' %>">
+            <option value="" selected>--<%= __('contract.fields.Dog') %> --</option>
+            <% for  (let i = 0; i < allDogs.length; i++) { let dog = allDogs[i]; %>
+            <option value="<%= dog._id %>" label="<%= dog.DogName %>"
+            <% if (formMode == 'createNew') { %>
+                <%= (dog._id.toString() == contr.Dog) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showEdit') { %>
+                    <%= (contr._id && dog._id == contr.Dog._id) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'edit') { %>
+                    <%= (dog._id == contr.Dog) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showDetails') { %>
+                    <%= (contr._id && dog._id.toString() == contr.Dog._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+            </option>
+            <% } %>
+        </select>
+        <span id="errorDog" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Dog'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Dog')).message) %>
+            <% } %>
+        </span>
+        <label for="Date"><%= __('contract.fields.Date') %>: <span class="symbol-required">*</span></label>
+        <input type="date" name="Date" id="Date" placeholder="ex. 2010-10-10"
+               value="<%= fmt.formatDate(contr.Date) %>" <%= (formMode == 'showDetails') ? 'disabled' : '' %> class="
+            <%= validationErrors.find(e => e.path.includes('Date')) ? 'error-input' : '' %>"/>
+        <span id="errorDate" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Date'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Date')).message) %>
+            <% } %>
+        </span>
+        <label for="Obligations"><%= __('contract.fields.Obligations') %>: <span
+                    class="symbol-required">*</span></label>
+        <input type="text" name="Obligations" id="Obligations" placeholder="2-200 charachters"
+               value="<%= contr.Obligations %>" <%= (formMode == 'showDetails') ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Obligations')) ? 'error-input' : '' %>"/>
+        <span id="errorObligations" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Obligations'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Obligations')).message) %>
+            <% } %>
+        </span>
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if(formMode == 'showDetails') { %>
+                <div class="form-buttons">
+                    <a href="/contracts/edit/<%= contr._id %>" class="list-actions-button-edit">
+                        <%= __('list.actions.edit') %>
+                    </a>
+                </div>
+            <% } %>
+            <% if(formMode != 'showDetails') { %>
+                <input type="submit" class="form-button-submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/contracts">
+                    <%= __('form.actions.cancel') %>
+                </a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/contracts">
+                    <%= __('form.actions.return') %>
+                </a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

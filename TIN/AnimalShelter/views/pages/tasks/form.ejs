@@ -1,0 +1,110 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <script type="application/javascript" src="/js/validationTaskForm.js"></script>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+    <form class="form" method="post" action="<%= formAction %>" novalidate>
+        <div style="display: none">
+            <span id="errorMessage-required"><%= __('validationMessage.fieldRequired') %></span>
+            <span id="errorMessage-dateFormat"><%= __('validationMessage.fieldDateFormat') %></span>
+            <span id="errorMessage-notNumber"><%= __('validationMessage.fieldNotNumber') %></span>
+            <span id="errorMessage-numberRangeStatus"><%= __('validationMessage.fieldNumberRangeStatus') %></span>
+            <span id="errorMessage-pastDate"><%= __('validationMessage.fieldPastDate') %></span>
+            <span id="errorMessage-totalError"><%= __('validationMessage.totalError') %></span>
+        </div>
+        <input type="hidden" name="_id" value="<%= task._id %>">
+        <label for="Employee"><%= __('task.fields.Employee') %>: <span class="symbol-required">*</span></label>
+        <select name="Employee" id="Employee" required <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+            <%= validationErrors.find(e => e.path.includes('Employee')) ? 'error-input' : '' %>">
+            <option value="" selected>--<%= __('task.fields.Employee') %> --</option>
+            <% for  (let i = 0; i < allEmps.length; i++) { let emp = allEmps[i]; %>
+            <option value="<%= emp._id %>" label="<%= emp.EmpName %>"
+            <% if (formMode == 'createNew') { %>
+                <%= (emp._id.toString() == task.Employee) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showEdit') { %>
+                    <%= (task._id && emp._id.toString() == task.Emp._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'edit') { %>
+                    <%= (emp._id.toString() == task.Employee) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showDetails') { %>
+                    <%= (task._id && emp._id.toString() == task.Emp._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+            </option>
+            <% } %>
+        </select>
+        <span id="errorEmployee" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Employee'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Employee')).message) %>
+            <% } %>
+        </span>
+        <label for="Dog"><%= __('task.fields.Dog') %>: <span class="symbol-required">*</span></label>
+        <select name="Dog" id="Dog" required <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Dog')) ? 'error-input' : '' %>">
+            <option value="" selected>--<%= __('task.fields.Dog') %> --</option>
+            <% for  (let i = 0; i < allDogs.length; i++) { let dog = allDogs[i]; %>
+            <option value="<%= dog._id %>" label="<%= dog.DogName %>"
+            <% if (formMode == 'createNew') { %>
+                <%= (dog._id.toString() == task.Dog) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showEdit') { %>
+                    <%= (task._id && dog._id == task.Dog._id) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'edit') { %>
+                    <%= (dog._id == task.Dog) ? 'selected' : '' %>>
+                <% } %>
+                <% if (formMode == 'showDetails') { %>
+                    <%= (task._id && dog._id.toString() == task.Dog._id.toString()) ? 'selected' : '' %>>
+                <% } %>
+            </option>
+            <% } %>
+        </select>
+        <span id="errorDog" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Dog'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Dog')).message) %>
+            <% } %>
+        </span>
+        <label for="Status"><%= __('task.fields.Status') %>: <span class="symbol-required">*</span></label>
+        <input type="number" name="Status" min=0 max=10 id="Status" placeholder="input value 0-10" pattern="[0-9]{1,3}+"
+               value="<%= task.Status %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+            <%= validationErrors.find(e => e.path.includes('Status')) ? 'error-input' : '' %>"></progress>
+        <span id="errorStatus" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Status'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Status')).message) %>
+            <% } %>
+        </span>
+        <label for="Descr"><%= __('task.fields.Descr') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="Descr" id="Descr" placeholder="2-200 charachters"
+               value="<%= task.Descr %>" <%= ( formMode == 'showDetails' ) ? 'disabled' : '' %> class="
+                <%= validationErrors.find(e => e.path.includes('Descr')) ? 'error-input' : '' %>"/>
+        <span id="errorDescr" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Descr'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Descr')).message) %>
+            <% } %>
+        </span>
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if(formMode == 'showDetails') { %>
+                <div class="form-buttons">
+                    <a href="/tasks/edit/<%= task._id %>" class="list-actions-button-edit">
+                        <%= __('list.actions.edit') %>
+                    </a>
+                </div>
+            <% } %>
+            <% if(formMode != 'showDetails') { %>
+            <input type="submit" class="form-button-submit" value="<%= btnLabel %>"/>
+            <a class="form-button-cancel" href="/tasks">
+                <%= __('form.actions.cancel') %>
+            </a>
+            <% } else { %>
+            <a class="form-button-cancel" href="/tasks">
+                <%= __('form.actions.return') %>
+            </a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

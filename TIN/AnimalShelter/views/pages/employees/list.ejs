@@ -1,0 +1,77 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>
+        <%= __('employee.list.title') %>
+    </h2>
+    <table class="table-list">
+        <tr>
+            <th>
+                <%= __('employee.fields.EmpName') %>
+            </th>
+            <th>
+                <%= __('employee.fields.EmpSurname') %>
+            </th>
+            <th>
+                <%= __('employee.fields.DateEmp') %>
+            </th>
+            <th>
+                <%= __('employee.fields.EmailEmp') %>
+            </th>
+            <th>
+                <%= __('list.actions.title') %>
+            </th>
+        </tr>
+        <tbody>
+        <% for (let emp of employees) { %>
+            <% if(((emp._id == loggedUser._id) && empi) || admin) { %>
+            <tr>
+                <td>
+                    <%= emp.EmpName %>
+                </td>
+                <td>
+                    <%= emp.EmpSurname %>
+                </td>
+                <td>
+                    <%= emp.DateEmp.toISOString().split('T')[0] %>
+                </td>
+                <td>
+                    <%= emp.EmailEmp %>
+                </td>
+                <td>
+                    <ul class="list-actions">
+                        <li>
+                            <a href="/employees/details/<%= emp._id %>" class="list-actions-button-details">
+                                <%= __('list.actions.details') %>
+                            </a>
+                        </li>
+                        <% if(loggedUser._id == emp._id || admin){ %>
+                        <li>
+                            <a href="/employees/edit/<%= emp._id %>" class="list-actions-button-edit">
+                                <%= __('list.actions.edit') %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(admin){ %>
+                        <li>
+                            <a href="/employees/delete/<%= emp._id %>" class="list-actions-button-delete">
+                                <%= __('list.actions.delete') %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </td>
+            </tr>
+            <% } %>
+
+        <% } %>
+        </tbody>
+    </table>
+    <% if(admin){ %>
+    <p>
+        <a href="/employees/add" class="button-add">
+            <%= __('employee.list.AddNew') %>
+        </a>
+    </p>
+    <% } %>
+</main>
+<%- include('../../fragments/footer.ejs') %>

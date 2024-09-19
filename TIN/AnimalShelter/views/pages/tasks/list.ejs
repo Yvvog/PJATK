@@ -1,0 +1,96 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>
+        <%= __('task.list.title') %>
+    </h2>
+    <table class="table-list-contracts">
+        <tr>
+            <th>
+                <%= __('task.fields.Employee') %>
+            </th>
+            <th>
+                <%= __('task.fields.Dog') %>
+            </th>
+            <th>
+                <%= __('task.fields.Status') %>
+            </th>
+            <th>
+                <%= __('task.fields.Descr') %>
+            </th>
+            <th>
+                <%= __('list.actions.title') %>
+            </th>
+        </tr>
+        <tbody>
+        <% for (let task of tasks) { %>
+            <% if((task.Emp._id == loggedUser._id) || admin) { %>
+            <tr>
+                <td>
+                    <%= task.Emp.EmpName %>
+                </td>
+                <td>
+                    <%= task.Dog.DogName %>
+                </td>
+                <td>
+                    <progress name="Status" id="Status" min=0 max=10 value="<%= task.Status %>"></progress>
+                    <% if(empi && task.Status < 9){ %>
+                    <a href="/tasks/progress/<%= task._id %>" class="list-actions-button-edit">
+                        <%= "+1" %>
+                    </a>
+                    <% } %>
+                    <% if(empi && task.Status != 10){ %>
+                    <a href="/tasks/complete/<%= task._id %>" class="list-actions-button-edit">
+                        <%= __('list.actions.complete') %>
+                    </a>
+                    <% } %>
+                </td>
+                <td>
+                    <%= task.Descr %>
+                </td>
+                <td>
+                    <ul class="list-actions">
+                        <% if((loggedUser._id == task.Emp._id) || admin){ %>
+                        <li>
+                            <a href="/tasks/details/<%= task._id %>" class="list-actions-button-details">
+                                <%= __('list.actions.details') %>
+                            </a>
+                        </li>
+                        <% if(task.Status != 10){ %>
+                        <li>
+                            <a href="/tasks/edit/<%= task._id %>" class="list-actions-button-edit">
+                                <%= __('list.actions.edit') %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% } %>
+                        <% if(admin){ %>
+                        <% if(task.Status == 10){ %>
+                        <li>
+                            <a href="/tasks/reset/<%= task._id %>" class="list-actions-button-reset">
+                                <%= __('list.actions.reset') %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <li>
+                            <a href="/tasks/delete/<%= task._id %>" class="list-actions-button-delete">
+                                <%= __('list.actions.delete') %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </td>
+            </tr>
+            <% } %>
+
+        <% } %>
+        </tbody>
+    </table>
+
+    <p>
+        <a href="/tasks/add" class="button-add">
+            <%= __('task.list.AddNew') %>
+        </a>
+    </p>
+
+</main>
+<%- include('../../fragments/footer.ejs') %>

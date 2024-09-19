@@ -1,0 +1,113 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <script type="application/javascript" src="/js/validationDogForm.js"></script>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+    <form class="form" method="post" action="<%= formAction %>" novalidate>
+        <div style="display: none">
+            <span id="errorMessage-required"><%= __('validationMessage.fieldRequired') %></span>
+            <span id="errorMessage-length"><%= __('validationMessage.fieldLength') %></span>
+            <span id="errorMessage-notNumber"><%= __('validationMessage.fieldNotNumber') %></span>
+            <span id="errorMessage-dateFormat"><%= __('validationMessage.fieldDateFormat') %></span>
+            <span id="errorMessage-pastDate"><%= __('validationMessage.fieldPastDate') %></span>
+            <span id="errorMessage-dateIfAfter"><%= __('validationMessage.fieldDateIfAfter') %></span>
+            <span id="errorMessage-totalError"><%= __('validationMessage.totalError') %></span>
+        </div>
+        <input type="hidden" name="_id" value="<%= dog._id %>">
+        <label for="DogName"><%= __('dog.fields.DogName') %>: <span class="symbol-required">*</span></label>
+        <input type="text" name="DogName" id="DogName" placeholder="2-60 charachters"
+               value="<%= dog.DogName %>" <%= (formMode == 'showDetails') ? 'disabled' : '' %> class="
+            <%= validationErrors.find(e => e.path.includes('DogName')) ? 'error-input' : '' %>"/>
+        <span id="errorDogName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('DogName'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('DogName')).message) %>
+            <% } %>
+        </span>
+        <label for="DateFrom"><%= __('dog.fields.DateFrom') %>: <span class="symbol-required">*</span></label>
+        <input type="date" name="DateFrom" id="DateFrom" placeholder="ex. 2010-10-10"
+               value="<%= fmt.formatDate(dog.DateFrom) %>" <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="
+                <%= validationErrors.find(e => e.path.includes('DateFrom')) ? 'error-input' : '' %>"/>
+        <span id="errorDateFrom" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('DateFrom'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('DateFrom')).message) %>
+            <% } %>
+        </span>
+        <label for="Healthy"><%= __('dog.fields.Healthy') %>: <span class="symbol-required">*</span></label>
+        <input type="checkbox" name="Healthy" id="Healthy" <%= (dog.Healthy == 'on') ? 'checked' : '' %>
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorHealthy" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Healthy'))) { %>
+                <%= __(validationErrors.find(e => e.path.includes('Healthy')).message) %>
+            <% } %>
+        </span>
+        <% if(formMode == 'showDetails') { %>
+            <div class="form-buttons">
+                <a href="/dogs/edit/<%= dog._id %>" class="list-actions-button-edit">Edit</a></div>
+        <% } %>
+        <% if (formMode == 'showDetails') { %>
+        <div class="wrapper">
+            <% if (dog.contracts.length > 0) { %>
+                <h2>
+                    <%= __('dog.form.Details.ContractDetails') %>
+                </h2>
+                <table class="table-list">
+                    <thead>
+                    <tr>
+                        <th>
+                            <%= __('contract.fields.Visitor') %>
+                        </th>
+                        <th>
+                            <%= __('contract.fields.Date') %>
+                        </th>
+                        <th>
+                            <%= __('contract.fields.Obligations') %>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (let c of dog.contracts) { %>
+                        <% if((c.Vis._id == loggedUser._id) || admin) { %>
+                            <tr>
+                                <td>
+                                    <a href="/visitors/details/<%= c.Vis._id %>">
+                                        <%= c.Vis.Name %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= c.Date.toISOString().split('T')[0] %>
+                                </td>
+                                <td>
+                                    <%= c.Obligations %>
+                                </td>
+                            </tr>
+                        <% } %>
+
+                    <% } %>
+                    </tbody>
+                </table>
+            <% }else{ %>
+                <div>
+                    <%= __('contract.fields.NoFound') %>
+                </div>
+            <% } %>
+            <% } %>
+        </div>
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if(formMode != 'showDetails') { %>
+                <input type="submit" class="form-button-submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/dogs">
+                    <%= __('form.actions.cancel') %>
+                </a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/dogs">
+                    <%= __('form.actions.return') %>
+                </a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

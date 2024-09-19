@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const dogsController = require('../controllers/dogsContoller');
+router.get('/', dogsController.showDogsList);
+router.get('/add', dogsController.showAddDogForm);
+router.get('/edit/:dogId', dogsController.showEditDogForm);
+router.get('/details/:dogId', dogsController.showDogDetails);
+router.post('/add', dogsController.addDog);
+router.post('/edit', dogsController.updateDog);
+router.get('/delete/:dogId', dogsController.deleteDog);
+module.exports = router;

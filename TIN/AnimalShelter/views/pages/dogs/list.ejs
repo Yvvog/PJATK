@@ -1,0 +1,69 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>
+        <%= __('dog.list.title') %>
+    </h2>
+    <table class="table-list">
+        <tr>
+            <th>
+                <%= __('dog.fields.DogName') %>
+            </th>
+            <th>
+                <%= __('dog.fields.DateFrom') %>
+            </th>
+            <th>
+                <%= __('dog.fields.Healthy') %>
+            </th>
+            <th>
+                <%= __('list.actions.title') %>
+            </th>
+        </tr>
+        <tbody>
+        <% for (let dog of dogs) { %>
+        <tr>
+            <td>
+                <%= dog.DogName %>
+            </td>
+            <td>
+                <%= dog.DateFrom.toISOString().split('T')[0] %>
+            </td>
+            <td>
+                <%= dog.Healthy=='on' ? __('list.yes'):
+                        __('list.no') %>
+            </td>
+            <td>
+                <ul class="list-actions">
+                    <li>
+                        <a href="/dogs/details/<%= dog._id %>" class="list-actions-button-details">
+                            <%= __('list.actions.details') %>
+                        </a>
+                    </li>
+                    <% if(admin || empi){ %>
+                    <li>
+                        <a href="/dogs/edit/<%= dog._id %>" class="list-actions-button-edit">
+                            <%= __('list.actions.edit') %>
+                        </a>
+                    </li>
+                    <% if(admin){ %>
+                    <li>
+                        <a href="/dogs/delete/<%= dog._id %>" class="list-actions-button-delete">
+                            <%= __('list.actions.delete') %>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% } %>
+                </ul>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <% if(admin || empi){ %>
+    <p>
+        <a href="/dogs/add" class="button-add">
+            <%= __('dog.list.AddNew') %>
+        </a>
+    </p>
+    <% } %>
+</main>
+<%- include('../../fragments/footer.ejs') %>
